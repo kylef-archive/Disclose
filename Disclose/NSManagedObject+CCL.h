@@ -3,7 +3,7 @@
 @interface NSManagedObject (CCL)
 
 - (NSArray */* NSString */)ccl_propertyNames;
-- (NSString *)ccl_name;
+- (NSString *)disclosureDescription;
 - (NSString *)ccl_descriptionForPropertyDescription:(NSPropertyDescription *)propertyDescription;
 
 @end

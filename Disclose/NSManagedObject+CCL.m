@@ -6,7 +6,7 @@
     return [self.entity.properties valueForKey:NSStringFromSelector(@selector(name))];
 }
 
-- (NSString *)ccl_name {
+- (NSString *)disclosureDescription {
     NSString *name;
     NSArray *properties = [self ccl_propertyNames];
 
@@ -46,7 +46,7 @@
         } else {
             if (value) {
                 NSManagedObject *relatedObject = value;
-                description = [relatedObject ccl_name];
+                description = [relatedObject disclosureDescription];
             } else {
                 description = @"None";
             }

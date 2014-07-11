@@ -57,7 +57,7 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     NSManagedObject *managedObject = [self objectAtIndexPath:indexPath];
-    cell.textLabel.text = [managedObject ccl_name];
+    cell.textLabel.text = [managedObject disclosureDescription];
 
     return cell;
 }

@@ -14,7 +14,7 @@
 - (void)setManagedObject:(NSManagedObject *)managedObject {
     _managedObject = managedObject;
 
-    self.title = [managedObject ccl_name];
+    self.title = [managedObject disclosureDescription];
 
     if ([self isViewLoaded]) {
         [self.tableView reloadData];
