@@ -24,13 +24,24 @@
 
 - (void)setEntity:(NSEntityDescription *)entity {
     _entity = entity;
-
     self.title = entity.name;
+    [self loadData];
+}
 
-    NSAttributeDescription *attributeDescription = [entity.properties firstObject];
+- (void)setPredicate:(NSPredicate *)predicate {
+    _predicate = predicate;
+    [self loadData];
+}
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity.name];
+- (void)loadData {
+    if (self.fetchedResultsController) {
+        self.fetchedResultsController.delegate = nil;
+    }
+
+    NSAttributeDescription *attributeDescription = [self.entity.properties firstObject];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:self.entity.name];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attributeDescription.name ascending:YES]];
+    fetchRequest.predicate = self.predicate;
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     fetchedResultsController.delegate = self;
     [fetchedResultsController performFetch:nil];

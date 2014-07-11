@@ -1,4 +1,5 @@
 #import "CCLEntityManagedObjectDetailViewController.h"
+#import "CCLEntityManagedObjectListViewController.h"
 #import "NSManagedObject+CCL.h"
 
 @interface CCLEntityManagedObjectDetailViewController ()
@@ -50,11 +51,7 @@
     BOOL hasDisclosureIndicator = [self isValueURL:value];
 
     if ([property isKindOfClass:[NSRelationshipDescription class]]) {
-        if (((NSRelationshipDescription *)property).isToMany) {
-            hasDisclosureIndicator = [[self.managedObject valueForKey:property.name] count] > 0;
-        } else {
-            hasDisclosureIndicator = [self.managedObject valueForKey:property.name] != nil;
-        }
+        hasDisclosureIndicator = ((NSRelationshipDescription *)property).isToMany || [self.managedObject valueForKey:property.name] != nil;
     }
 
     cell.textLabel.text = property.name;
@@ -70,9 +67,21 @@
 
     if ([property isKindOfClass:[NSRelationshipDescription class]]) {
         NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
+        NSRelationshipDescription *inverseRelationship = relationship.inverseRelationship;
 
         if (relationship.isToMany) {
-            // TODO list of managed object with this filter
+            if (inverseRelationship) {
+                CCLEntityManagedObjectListViewController *viewController = [[CCLEntityManagedObjectListViewController alloc] initWithManagedObjectContext:[self.managedObject managedObjectContext]];
+                viewController.entity = relationship.destinationEntity;
+
+                if (inverseRelationship.isToMany) {
+                    viewController.predicate = [NSPredicate predicateWithFormat:@"ANY %K == %@", inverseRelationship.name, self.managedObject];
+                } else {
+                    viewController.predicate = [NSPredicate predicateWithFormat:@"%K == %@", inverseRelationship.name, self.managedObject];
+                }
+
+                [self.navigationController pushViewController:viewController animated:YES];
+            }
         } else {
             NSManagedObject *relatedObject = [self.managedObject valueForKey:property.name];
 

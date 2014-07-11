@@ -7,5 +7,6 @@
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSEntityDescription *entity;
+@property (nonatomic, strong) NSPredicate *predicate;
 
 @end
