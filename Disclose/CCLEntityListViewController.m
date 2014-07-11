@@ -17,6 +17,7 @@
 
     self.title = @"Entities";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
+    self.tableView.rowHeight = 50.0;
 }
 
 - (void)close {
@@ -34,9 +35,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSEntityDescription *entity = self.model.entities[indexPath.row];
 
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = entity.name;
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entity.name];
+    NSUInteger count = [self.managedObjectContext countForFetchRequest:fetchRequest error:nil];
+
+    if (count == 1) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ object", @(count)];
+    } else {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ objects", @(count)];
+    }
+
     return cell;
 }
 
