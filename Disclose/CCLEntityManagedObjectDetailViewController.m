@@ -31,21 +31,42 @@
     return [self.managedObject.entity.properties count];
 }
 
+- (BOOL)isValueURL:(NSString *)value {
+    BOOL isURL = NO;
+
+    if (value && [value rangeOfString:@":"].location != NSNotFound && [value rangeOfString:@" "].location == NSNotFound) {
+        NSURL *URL = [NSURL URLWithString:value];
+        isURL = URL && [[UIApplication sharedApplication] canOpenURL:URL];
+    }
+
+    return isURL;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
 
     NSPropertyDescription *property = self.managedObject.entity.properties[indexPath.row];
-    BOOL isRelationship = [property isKindOfClass:[NSRelationshipDescription class]];
+    NSString *value = [self.managedObject ccl_descriptionForPropertyDescription:property];
+    BOOL hasDisclosureIndicator = [self isValueURL:value];
+
+    if ([property isKindOfClass:[NSRelationshipDescription class]]) {
+        if (((NSRelationshipDescription *)property).isToMany) {
+            hasDisclosureIndicator = [[self.managedObject valueForKey:property.name] count] > 0;
+        } else {
+            hasDisclosureIndicator = [self.managedObject valueForKey:property.name] != nil;
+        }
+    }
 
     cell.textLabel.text = property.name;
-    cell.detailTextLabel.text = [self.managedObject ccl_descriptionForPropertyDescription:property];
-    cell.accessoryType = isRelationship? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.detailTextLabel.text = value;
+    cell.accessoryType = hasDisclosureIndicator? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSPropertyDescription *property = self.managedObject.entity.properties[indexPath.row];
+    NSString *value = [self.managedObject ccl_descriptionForPropertyDescription:property];
 
     if ([property isKindOfClass:[NSRelationshipDescription class]]) {
         NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
@@ -61,6 +82,8 @@
                 [self.navigationController pushViewController:relatedViewController animated:YES];
             }
         }
+    } else if ([self isValueURL:value]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:value]];
     }
 }
 

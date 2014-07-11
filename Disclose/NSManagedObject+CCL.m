@@ -39,7 +39,7 @@
             NSInteger count = [objects count];
 
             if (count == 1) {
-                description = [NSString stringWithFormat:@"%@ object", @(count)];
+                description = @"None";
             } else {
                 description = [NSString stringWithFormat:@"%@ objects", @(count)];
             }
