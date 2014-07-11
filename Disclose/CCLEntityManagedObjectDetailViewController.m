@@ -9,6 +9,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.tableView.rowHeight = 50.0;
 }
 
 - (void)setManagedObject:(NSManagedObject *)managedObject {
