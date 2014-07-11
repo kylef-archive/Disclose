@@ -1,12 +1,19 @@
 #import "CCLEntityListViewController.h"
 #import "CCLEntityManagedObjectListViewController.h"
 
+
+@interface CCLEntityListViewController ()
+
+@property (nonatomic, strong, readonly) NSManagedObjectModel *model;
+
+@end
+
 @implementation CCLEntityListViewController
 
-- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model context:(NSManagedObjectContext *)context {
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
     if (self = [super init]) {
-        _model = model;
         _managedObjectContext = context;
+        _model = context.persistentStoreCoordinator.managedObjectModel;
     }
 
     return self;

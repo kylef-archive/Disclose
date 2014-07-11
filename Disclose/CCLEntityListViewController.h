@@ -3,9 +3,8 @@
 
 @interface CCLEntityListViewController : UITableViewController
 
-- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model context:(NSManagedObjectContext *)context;
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
-@property (nonatomic, strong, readonly) NSManagedObjectModel *model;
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
 
 @end
