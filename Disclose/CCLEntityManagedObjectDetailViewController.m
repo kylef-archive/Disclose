@@ -64,4 +64,22 @@
     }
 }
 
+#pragma mark -
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    return (action == @selector(copy:));
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (action == @selector(copy:)) {
+        NSPropertyDescription *property = self.managedObject.entity.properties[indexPath.row];
+        NSString *text = [self.managedObject ccl_descriptionForPropertyDescription:property];
+        [[UIPasteboard generalPasteboard] setString:text];
+    }
+}
+
 @end
