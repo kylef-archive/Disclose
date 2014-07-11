@@ -62,6 +62,27 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (editingStyle) {
+        case UITableViewCellEditingStyleDelete: {
+            NSManagedObject *managedObject = [self objectAtIndexPath:indexPath];
+            [self.managedObjectContext deleteObject:managedObject];
+
+            NSError *error;
+            if ([self.managedObjectContext save:&error] == NO) {
+                NSLog(@"Disclose: Failed to save managed object context after deleting %@", error);
+            }
+
+            break;
+        }
+
+        case UITableViewCellEditingStyleInsert:
+            break;
+        case UITableViewCellEditingStyleNone:
+            break;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     CCLEntityManagedObjectDetailViewController *viewController = [[CCLEntityManagedObjectDetailViewController alloc] init];
     viewController.managedObject = [self objectAtIndexPath:indexPath];
