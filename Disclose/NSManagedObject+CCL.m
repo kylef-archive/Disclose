@@ -36,10 +36,10 @@
 
         if (relationship.isToMany) {
             NSSet *objects = value;
-            NSInteger count = [objects count];
+            NSUInteger count = [objects count];
 
             if (count == 1) {
-                description = @"None";
+                description = [NSString stringWithFormat:@"%@ object", @(count)];
             } else {
                 description = [NSString stringWithFormat:@"%@ objects", @(count)];
             }
