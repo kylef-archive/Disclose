@@ -1,5 +1,6 @@
 #import "CCLEntityManagedObjectListViewController.h"
 #import "CCLEntityManagedObjectDetailViewController.h"
+#import "CCLSortDescriptorViewController.h"
 #import "NSManagedObject+CCL.h"
 #import "NSEntityDescription+Disclose.h"
 
@@ -21,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(handleSort)];
 }
 
 - (void)setEntity:(NSEntityDescription *)entity {
@@ -51,6 +54,16 @@
         [self.tableView reloadData];
     }
 }
+
+#pragma mark -
+
+- (void)handleSort {
+    CCLSortDescriptorViewController *viewController = [[CCLSortDescriptorViewController alloc] init];
+    viewController.entity = self.entity;
+    [self presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSUInteger count = [self.fetchedResultsController.sections count];
