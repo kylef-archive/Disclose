@@ -39,9 +39,8 @@
         self.fetchedResultsController.delegate = nil;
     }
 
-    NSAttributeDescription *attributeDescription = [self.entity.properties firstObject];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:self.entity.name];
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:attributeDescription.name ascending:YES]];
+    fetchRequest.sortDescriptors = [self.entity discloseDefaultSortDescriptors];
     fetchRequest.predicate = self.predicate;
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     fetchedResultsController.delegate = self;
