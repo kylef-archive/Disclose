@@ -1,6 +1,7 @@
 #import "CCLEntityManagedObjectDetailViewController.h"
 #import "CCLEntityManagedObjectListViewController.h"
 #import "NSManagedObject+CCL.h"
+#import "NSPropertyDescription+Disclose.h"
 
 @interface CCLEntityManagedObjectDetailViewController ()
 
@@ -54,7 +55,7 @@
         hasDisclosureIndicator = ((NSRelationshipDescription *)property).isToMany || [self.managedObject valueForKey:property.name] != nil;
     }
 
-    cell.textLabel.text = property.name;
+    cell.textLabel.text = [property discloseLocalizedName];
     cell.detailTextLabel.text = value;
     cell.accessoryType = hasDisclosureIndicator? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 

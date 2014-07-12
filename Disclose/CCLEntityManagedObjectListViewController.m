@@ -1,6 +1,7 @@
 #import "CCLEntityManagedObjectListViewController.h"
 #import "CCLEntityManagedObjectDetailViewController.h"
 #import "NSManagedObject+CCL.h"
+#import "NSEntityDescription+Disclose.h"
 
 @interface CCLEntityManagedObjectListViewController () <NSFetchedResultsControllerDelegate>
 
@@ -24,7 +25,7 @@
 
 - (void)setEntity:(NSEntityDescription *)entity {
     _entity = entity;
-    self.title = entity.name;
+    self.title = [entity discloseLocalizedName];
     [self loadData];
 }
 
