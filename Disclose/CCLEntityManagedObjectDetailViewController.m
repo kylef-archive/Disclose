@@ -9,13 +9,27 @@
 
 @implementation CCLEntityManagedObjectDetailViewController
 
+- (void)dealloc {
+    if (self.managedObject) {
+        [self removeObserversForManagedObject:self.managedObject];
+    }
+}
+
+#pragma mark - View lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.tableView.rowHeight = 50.0;
 }
 
+#pragma mark - Properties
+
 - (void)setManagedObject:(NSManagedObject *)managedObject {
+    if (_managedObject) {
+        [self removeObserversForManagedObject:_managedObject];
+    }
+
     _managedObject = managedObject;
 
     self.title = [managedObject disclosureDescription];
@@ -23,7 +37,44 @@
     if ([self isViewLoaded]) {
         [self.tableView reloadData];
     }
+
+    if (managedObject) {
+        [self addObserversForManagedObject:managedObject];
+    }
 }
+
+#pragma mark - KVO
+
+static void * CCLEntityManagedObjectObservingContext = &CCLEntityManagedObjectObservingContext;
+
+- (void)addObserversForManagedObject:(NSManagedObject *)managedObject {
+    for (NSPropertyDescription *property in managedObject.entity.properties) {
+        [managedObject addObserver:self forKeyPath:property.name options:NSKeyValueObservingOptionNew context:CCLEntityManagedObjectObservingContext];
+    }
+}
+
+- (void)removeObserversForManagedObject:(NSManagedObject *)managedObject {
+    for (NSPropertyDescription *property in managedObject.entity.properties) {
+        [managedObject removeObserver:self forKeyPath:property.name context:CCLEntityManagedObjectObservingContext];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == CCLEntityManagedObjectObservingContext) {
+        NSPropertyDescription *property = self.managedObject.entity.propertiesByName[keyPath];
+        if (property) {
+            NSInteger index = [self.managedObject.entity.properties indexOfObject:property];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            });
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
