@@ -51,6 +51,21 @@
                 description = @"None";
             }
         }
+    } else if ([propertyDescription isKindOfClass:[NSAttributeDescription class]]) {
+        NSAttributeDescription *attributeDescription = (NSAttributeDescription *)propertyDescription;
+
+        switch (attributeDescription.attributeType) {
+            case NSBooleanAttributeType: {
+                if (value) {
+                    description = [value boolValue] ? @"Yes" : @"No";
+                } else {
+                    description = @"Unset";
+                }
+                break;
+            }
+            default:
+                description = [value description];
+        }
     } else {
         description = [value description];
     }
