@@ -1,3 +1,4 @@
+#import "CCLUtilities.h"
 #import "NSEntityDescription+Disclose.h"
 
 @implementation NSEntityDescription (Disclose)
@@ -8,7 +9,13 @@
     NSString *localizedKey = [@"Entity/" stringByAppendingString:entityName];
     NSString *localizedEntityName = self.managedObjectModel.localizationDictionary[localizedKey];
 
-    return localizedEntityName ? localizedEntityName : entityName;
+    if (localizedEntityName) {
+        entityName = localizedEntityName;
+    } else {
+        entityName = CCLCamelCaseToSpaces(entityName);
+    }
+
+    return entityName;
 }
 
 @end
