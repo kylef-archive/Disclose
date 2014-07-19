@@ -1,6 +1,6 @@
 #import "CCLEntityManagedObjectDetailViewController.h"
 #import "CCLEntityManagedObjectListViewController.h"
-#import "NSManagedObject+CCL.h"
+#import "NSManagedObject+Disclose.h"
 #import "NSPropertyDescription+Disclose.h"
 
 @interface CCLEntityManagedObjectDetailViewController ()
@@ -32,7 +32,7 @@
 
     _managedObject = managedObject;
 
-    self.title = [managedObject disclosureDescription];
+    self.title = [managedObject discloseDescription];
 
     if ([self isViewLoaded]) {
         [self.tableView reloadData];

@@ -1,12 +1,12 @@
-#import "NSManagedObject+CCL.h"
+#import "NSManagedObject+Disclose.h"
 
-@implementation NSManagedObject (CCL)
+@implementation NSManagedObject (Disclose)
 
 - (NSArray *)ccl_propertyNames {
     return [self.entity.properties valueForKey:NSStringFromSelector(@selector(name))];
 }
 
-- (NSString *)disclosureDescription {
+- (NSString *)discloseDescription {
     NSString *name;
     NSArray *properties = [self ccl_propertyNames];
 
@@ -46,7 +46,7 @@
         } else {
             if (value) {
                 NSManagedObject *relatedObject = value;
-                description = [relatedObject disclosureDescription];
+                description = [relatedObject discloseDescription];
             } else {
                 description = @"None";
             }

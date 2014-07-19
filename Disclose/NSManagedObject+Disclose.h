@@ -1,9 +1,10 @@
 #import <CoreData/CoreData.h>
 
-@interface NSManagedObject (CCL)
+@interface NSManagedObject (Disclose)
 
 - (NSArray */* NSString */)ccl_propertyNames;
-- (NSString *)disclosureDescription;
+- (NSString *)discloseDescription;
 - (NSString *)ccl_descriptionForPropertyDescription:(NSPropertyDescription *)propertyDescription;
 
 @end
+

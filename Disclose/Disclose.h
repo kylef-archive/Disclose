@@ -1,2 +1,2 @@
 #import "CCLEntityListViewController.h"
-#import "NSManagedObject+CCL.h"
+#import "NSManagedObject+Disclose.h"

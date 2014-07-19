@@ -1,6 +1,6 @@
 #import "CCLEntityManagedObjectListViewController.h"
 #import "CCLEntityManagedObjectDetailViewController.h"
-#import "NSManagedObject+CCL.h"
+#import "NSManagedObject+Disclose.h"
 #import "NSEntityDescription+Disclose.h"
 
 @interface CCLEntityManagedObjectListViewController () <NSFetchedResultsControllerDelegate>
@@ -68,7 +68,7 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     NSManagedObject *managedObject = [self objectAtIndexPath:indexPath];
-    cell.textLabel.text = [managedObject disclosureDescription];
+    cell.textLabel.text = [managedObject discloseDescription];
 
     return cell;
 }
