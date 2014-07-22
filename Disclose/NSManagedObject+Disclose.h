@@ -2,9 +2,14 @@
 
 @interface NSManagedObject (Disclose)
 
-- (NSArray */* NSString */)ccl_propertyNames;
+/*** Returns a string that describes the contents of the receiver.
+ @return A string that describes the contents of the receiver.
+ */
 - (NSString *)discloseDescription;
-- (NSString *)ccl_descriptionForPropertyDescription:(NSPropertyDescription *)propertyDescription;
+
+/*** Returns a string that describes the contents of a property.
+ @return A string that describes the contents of the received property.
+ */
+- (NSString *)discloseDescriptionForPropertyDescription:(NSPropertyDescription *)propertyDescription;
 
 @end
-

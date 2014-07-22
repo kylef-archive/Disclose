@@ -99,7 +99,7 @@ static void * CCLEntityManagedObjectObservingContext = &CCLEntityManagedObjectOb
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
 
     NSPropertyDescription *property = self.managedObject.entity.properties[indexPath.row];
-    NSString *value = [self.managedObject ccl_descriptionForPropertyDescription:property];
+    NSString *value = [self.managedObject discloseDescriptionForPropertyDescription:property];
     BOOL hasDisclosureIndicator = [self isValueURL:value];
 
     if ([property isKindOfClass:[NSRelationshipDescription class]]) {
@@ -115,7 +115,7 @@ static void * CCLEntityManagedObjectObservingContext = &CCLEntityManagedObjectOb
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSPropertyDescription *property = self.managedObject.entity.properties[indexPath.row];
-    NSString *value = [self.managedObject ccl_descriptionForPropertyDescription:property];
+    NSString *value = [self.managedObject discloseDescriptionForPropertyDescription:property];
 
     if ([property isKindOfClass:[NSRelationshipDescription class]]) {
         NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
@@ -161,7 +161,7 @@ static void * CCLEntityManagedObjectObservingContext = &CCLEntityManagedObjectOb
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     if (action == @selector(copy:)) {
         NSPropertyDescription *property = self.managedObject.entity.properties[indexPath.row];
-        NSString *text = [self.managedObject ccl_descriptionForPropertyDescription:property];
+        NSString *text = [self.managedObject discloseDescriptionForPropertyDescription:property];
         [[UIPasteboard generalPasteboard] setString:text];
     }
 }

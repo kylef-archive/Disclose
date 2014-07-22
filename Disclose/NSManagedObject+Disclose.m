@@ -27,7 +27,7 @@
     return name;
 }
 
-- (NSString *)ccl_descriptionForPropertyDescription:(NSPropertyDescription *)propertyDescription {
+- (NSString *)discloseDescriptionForPropertyDescription:(NSPropertyDescription *)propertyDescription {
     NSString *description;
     id value = [self valueForKey:propertyDescription.name];
 
