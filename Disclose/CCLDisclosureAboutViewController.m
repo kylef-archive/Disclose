@@ -1,5 +1,10 @@
 #import "CCLDisclosureAboutViewController.h"
 
+BOOL CCLDiscloseHasExpired() {
+    // Mon, 01 Sep 2014 19:42:07 GMT
+    return [[NSDate date] compare:[NSDate dateWithTimeIntervalSince1970:1409600527]] == NSOrderedDescending;
+}
+
 @implementation CCLDisclosureAboutViewController
 
 - (instancetype)init {
@@ -10,6 +15,21 @@
     [super viewDidLoad];
 
     self.title = @"Disclose";
+
+    if (CCLDiscloseHasExpired()) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 90)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 70)];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 0;
+        label.text = @"Sorry, this version of Disclose has expired. Please update to the latest version.";
+        [view addSubview:label];
+        self.tableView.tableHeaderView = view;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
+    }
+}
+
+- (void)close {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -36,7 +56,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return (section == 1)? @"This is a private beta. We really appreciate you involvement, but please don't share any details or beta builds publicly." : nil;
+    return (section == 1)? @"This is a private beta. We really appreciate your involvement, but please don't share any details or beta builds publicly." : nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -16,7 +16,17 @@
 @implementation CCLEntityListViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
-    return [self initWithRootViewController:[[CCLEntityListInternalViewController alloc] initWithManagedObjectContext:context]];
+    UIViewController *viewController = [[CCLEntityListInternalViewController alloc] initWithManagedObjectContext:context];
+
+    if (CCLDiscloseHasExpired()) {
+        viewController = [[CCLDisclosureAboutViewController alloc] init];
+    }
+
+    if (self = [self initWithRootViewController:viewController]) {
+        _managedObjectContext = context;
+    }
+
+    return self;
 }
 
 @end
