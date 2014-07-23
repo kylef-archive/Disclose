@@ -8,6 +8,7 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.frameworks = 'CoreData'
   spec.source_files = 'Disclose/*.{h,m}'
+  spec.public_header_files = 'Disclose/{Disclose,CCLEntityListViewController,NSManagedObject+Disclose}.h'
   spec.platform = :ios, '5.0'
 end
 
