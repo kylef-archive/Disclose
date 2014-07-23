@@ -4,13 +4,24 @@
 #import "NSEntityDescription+Disclose.h"
 
 
-@interface CCLEntityListViewController ()
+@interface CCLEntityListInternalViewController : UITableViewController
 
 @property (nonatomic, strong, readonly) NSManagedObjectModel *model;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end
 
 @implementation CCLEntityListViewController
+
+- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
+    return [self initWithRootViewController:[[CCLEntityListInternalViewController alloc] initWithManagedObjectContext:context]];
+}
+
+@end
+
+@implementation CCLEntityListInternalViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
     if (self = [super init]) {
