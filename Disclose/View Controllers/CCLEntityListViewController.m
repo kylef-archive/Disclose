@@ -1,6 +1,5 @@
 #import "CCLEntityListViewController.h"
 #import "CCLEntityManagedObjectListViewController.h"
-#import "CCLDisclosureAboutViewController.h"
 #import "NSEntityDescription+Disclose.h"
 
 
@@ -43,14 +42,8 @@
 
     self.title = @"Entities";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(close)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"About" style:UIBarButtonItemStylePlain target:self action:@selector(showAbout)];
 
     self.tableView.rowHeight = 50.0;
-}
-
-- (void)showAbout {
-    UIViewController *viewController = [[CCLDisclosureAboutViewController alloc] init];
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)close {
