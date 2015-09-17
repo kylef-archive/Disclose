@@ -4,6 +4,7 @@ Pod::Spec.new do |spec|
   spec.summary = 'A way to expose and view your managed objects in Core Data.'
   spec.homepage = 'http://cocode.org/'
   spec.authors = { 'Kyle Fuller' => 'kyle@fuller.li' }
+  spec.license = { :type => 'BSD', :file => 'LICENSE' }
   spec.source = { :git => 'https://github.com/cocodedev/Disclose', :tag => spec.version }
   spec.requires_arc = true
   spec.frameworks = 'CoreData'
