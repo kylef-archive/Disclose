@@ -18,10 +18,6 @@
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
     UIViewController *viewController = [[CCLEntityListInternalViewController alloc] initWithManagedObjectContext:context];
 
-    if (CCLDiscloseHasExpired()) {
-        viewController = [[CCLDisclosureAboutViewController alloc] init];
-    }
-
     if (self = [self initWithRootViewController:viewController]) {
         _managedObjectContext = context;
     }
