@@ -13,12 +13,12 @@
 
 @end
 
-@implementation CCLEntityListViewController
+@implementation EntityListViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)context {
     UIViewController *viewController = [[CCLEntityListInternalViewController alloc] initWithManagedObjectContext:context];
 
-    if (self = [self initWithRootViewController:viewController]) {
+    if (self = [super initWithRootViewController:viewController]) {
         _managedObjectContext = context;
     }
 

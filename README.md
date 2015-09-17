@@ -9,6 +9,9 @@ Once you've installed Disclose into your project, you will need to invoke it,
 passing it a managed object context on the main queue and then present
 the view controller.
 
+It's common to add Disclose to a private menu in development builds of your
+application.
+
 ### Swift
 
 ```swift
@@ -16,7 +19,7 @@ import Disclose
 
 class MyViewController : UIViewController {
   func presentDisclose() {
-    let viewController = CCLEntityListViewController(managedObjectContext: context)
+    let viewController = EntityListViewController(managedObjectContext: context)
     presentViewController(viewController, animated: true, completion: nil)
   }
 }
@@ -31,7 +34,7 @@ class MyViewController : UIViewController {
 
 - (void)presentDisclose {
   NSManagedObjectContext *context = /* Create a managed object context to use with Disclose */;
-  CCLEntityListViewController *viewController = [[CCLEntityListViewController alloc] initWithManagedObjectContext:context];
+  EntityListViewController *viewController = [[EntityListViewController alloc] initWithManagedObjectContext:context];
   [self presentViewController:viewController animated:YES completion:nil];
 }
 
