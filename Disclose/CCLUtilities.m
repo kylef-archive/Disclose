@@ -14,5 +14,5 @@ NSString *CCLCamelCaseToSpaces(NSString *string) {
 
     NSMutableString *result = [string mutableCopy];
     [expression replaceMatchesInString:result options:0 range:NSMakeRange(0, [result length]) withTemplate:@" $1"];
-    return [result copy];
+    return [result stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
